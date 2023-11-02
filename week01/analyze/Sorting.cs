@@ -8,6 +8,12 @@
  * GitHub repository, unshared Google Drive folder) is acceptable.
  *
  */
+
+ /*Answer: The Big O notation for the SortArray function is O(n^2) in terms of complexity.
+ The time it takes to sort the array using the algorithm grows quadratically with the number 
+ of elements in the array.
+ */
+
 public static class Sorting {
     public static void Run() {
         var numbers = new[] { 3, 2, 1, 6, 4, 9, 8 };
@@ -25,3 +31,4 @@ public static class Sorting {
         }
     }
 }
+

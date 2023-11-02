@@ -14,6 +14,8 @@
 /// is defined as the square root of the variance.  The variance is 
 /// defined as the average of the squared differences from the mean.
 /// </summary>
+/// 
+
 public static class StandardDeviation {
     public static void Run() {
         var numbers = new[] { 600, 470, 170, 430, 300 };
