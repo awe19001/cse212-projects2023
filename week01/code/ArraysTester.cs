@@ -44,19 +44,16 @@ public static class ArraysTester {
     }
    */ 
 
-
-   public static List<double> MultiplesOf(double start, int count) //initialize the list to store the multiples.
-{
-    List<double> multiples = new List<double>();
-    for (int i = 0; i < count; i++)                                // use loop to calculate and add the multiples to the list.
+ private static double[] MultiplesOf(double number, int length)      
     {
-        double multiple = start * (i + 1);
-        multiples.Add(multiple);
-    }
-    return multiples;                                              // return the list of multiples.
-}                                                                  // you can call this function with the desired starting number and the number of multiples you want, and it will return a list of those multiples.
-                                                                   // Example: List<double> result = MultiplesOf(3, 5);
-                                                                   // result will contain: {3, 6, 9, 12, 15}
+        List<double> multiples = new List<double>();                    //step1: We start by creating a 'List<double>' called 'multiples' to store the calculated multiples of the given number.
+        for (int i = 1; i <= length; i++)                               //step2: We use a for loop to iterate from 1 to the specified length. It's important to start the loop from 1 to calculate multiples correctly.
+        {
+            double multiple = number * i;                               //step3: Inside the loop, we calculate the multiple of the number by the loop counter i, and we add this value to the multiples list.
+            multiples.Add(multiple);
+        }
+        return multiples.ToArray();                                     //step4: Convert the list to a double array and return it as the result of the function.        
+    } 
 
 
 
@@ -82,16 +79,16 @@ public static class ArraysTester {
 
 private static void RotateListRight(List<int> data, int amount) //here is the implementation of the 'RotateListRight' funtion
 {
-    if (amount < 1 || amount > data.Count)
+    if (amount < 1 || amount > data.Count)                      //step1: Check if the given 'amount' is within a valid range.
     {
                                                                 //Handle invalid input range or return an error.
         return;
     }
 
-    int rotateIndex = data.Count - amount;                      //calculate the index at which you should start the rotation. This can be done by subracting the 'amount' from 'data.Count'.
+    int rotateIndex = data.Count - amount;                      //step2. Calculate the index at which rotation needs to happen based on 'amount'. This can be done by subracting the 'amount' from 'data.Count'.
 
-    List<int> temp = data.GetRange(0, rotateIndex);             //create a temporary list to hold the elements that need to be rotated.
-    data.RemoveRange(0, rotateIndex);                           //remove the elements from the original list
-    data.InsertRange(data.Count, temp);                         //add the elements from the temporary list to the beginnning of the original list to complete the rotation.
+    List<int> temp = data.GetRange(0, rotateIndex);             //step3: Create a temporary list to hold the elements that need to be rotated.
+    data.RemoveRange(0, rotateIndex);                           //step4: Remove the elements that will be rotated from the original list.
+    data.InsertRange(data.Count, temp);                         //step5: Add the elements from the temporary list to the beginnning of the original list to complete the rotation.
 }
-}
+}                                                               
