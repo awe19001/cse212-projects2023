@@ -28,7 +28,12 @@ public class CustomerService {
 
         // Defect(s) Found: 
 
-        Console.WriteLine("=================");
+      var service = new CustomerService(4);
+        service.AddNewCustomer();
+        service.ServeCustomer();
+        Console.WriteLine("Test 4: Add one customer");
+        service.AddNewCustomer();
+
 
         // Test 2
         // Scenario: 

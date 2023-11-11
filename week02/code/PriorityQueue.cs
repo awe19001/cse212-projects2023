@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * CSE212 
  * (c) BYU-Idaho
  * 04-Prove - Problem 2
