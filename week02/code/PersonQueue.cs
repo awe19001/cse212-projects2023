@@ -2,7 +2,7 @@
 /// A basic implementation of a Queue
 /// </summary>
 public class PersonQueue {
-    private readonly List<Person> _queue = new();
+    private readonly Queue<Person> _queue = new Queue<Person>();
 
     public int Length => _queue.Count;
 
@@ -11,13 +11,16 @@ public class PersonQueue {
     /// </summary>
     /// <param name="person">The person to add</param>
     public void Enqueue(Person person) {
-        _queue.Insert(0, person);
+        _queue.Enqueue(person);
     }
 
     public Person Dequeue() {
-        var person = _queue[0];
-        _queue.RemoveAt(0);
-        return person;
+        if (_queue.Count == 0) {
+            Console.WriteLine("The queue is empty.");
+            return null;
+        }
+
+        return _queue.Dequeue();
     }
 
     public bool IsEmpty() {

@@ -17,17 +17,15 @@ public static class TakingTurns {
         // Scenario: Create a queue with the following people and turns: Bob (2), Tim (5), Sue (3) and
         //           run until the queue is empty
         // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-         Console.WriteLine("Test 1");
+        Console.WriteLine("Test 1");
         var players1 = new TakingTurnsQueue();
         players1.AddPerson("Bob", 2);
         players1.AddPerson("Tim", 5);
         players1.AddPerson("Sue", 3);
-            //Console.WriteLine(players);    // This can be un-commented out for debug help
+        // Console.WriteLine(players1); // This can be un-commented out for debug help
         while (players1.Length > 0)
             players1.GetNextPerson();
         Console.WriteLine("---------");
-
-        
 
         // Test 2
         // Scenario: Create a queue with the following people and turns: Bob (2), Tim (5), Sue (3)
@@ -40,11 +38,11 @@ public static class TakingTurns {
         players2.AddPerson("Sue", 3);
         for (int i = 0; i < 5; i++) {
             players2.GetNextPerson();
-            //Console.WriteLine(players); // This can be un-commented out for debug help
+            // Console.WriteLine(players2); // This can be un-commented out for debug help
         }
 
         players2.AddPerson("George", 3);
-            //Console.WriteLine(players);   //This can be un-commented out for debug help
+        // Console.WriteLine(players2); // This can be un-commented out for debug help
         while (players2.Length > 0)
             players2.GetNextPerson();
         Console.WriteLine("---------");
@@ -53,25 +51,21 @@ public static class TakingTurns {
         // Scenario: Create a queue with the following people and turns: Bob (2), Tim (Forever), Sue (3)
         //           Run 10 times.
         // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-       
         Console.WriteLine("Test 3");
         var players3 = new TakingTurnsQueue();
         players3.AddPerson("Bob", 2);
         players3.AddPerson("Tim", 0); // Forever
         players3.AddPerson("Sue", 3);
-            // Console.WriteLine(players);  //This can be un-commented out for debug help
+        // Console.WriteLine(players3); // This can be un-commented out for debug help
         for (int i = 0; i < 10; i++) {
             players3.GetNextPerson();
-             //Console.WriteLine(players);  //This can be un-commented out for debug help
+            // Console.WriteLine(players3); // This can be un-commented out for debug help
         }
         Console.WriteLine("---------");
-
-
 
         // Test 4
         // Scenario: Try to get the next person from an empty queue
         // Expected Result: Error message should be displayed
-  
         Console.WriteLine("Test 4");
         var players4 = new TakingTurnsQueue();
         players4.GetNextPerson();
