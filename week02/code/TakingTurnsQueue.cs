@@ -29,17 +29,21 @@ public class TakingTurnsQueue {
     /// person has an infinite number of turns.  An error message is displayed 
     /// if the queue is empty.
     /// </summary>
-    public void GetNextPerson() {
-        if (_people.IsEmpty())
+ public void GetNextPerson() {
+        if (_people.IsEmpty()) {
             Console.WriteLine("No one in the queue.");
-        else {
+        } else {
             Person person = _people.Dequeue();
-            if (person.Turns > 1) {
-                person.Turns -= 1;
-                _people.Enqueue(person);
-            }
+            if (person.Turns <= 0 || person.Turns > 1) {
+                // If turns is 0 or less (forever), or more than 1, add back to the queue
+                if (person.Turns > 1) {
+                    person.Turns -= 1;
+                    _people.Enqueue(person);
+                }
 
-            Console.WriteLine(person.Name);
+                Console.WriteLine(person.Name);
+            }
+            // If turns is 1, the person will not be added back to the queue
         }
     }
 

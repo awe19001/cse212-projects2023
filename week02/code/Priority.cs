@@ -27,9 +27,9 @@ public static class Priority {
         priorityQueue.Enqueue("Charlie", 2);
 
         Console.WriteLine("After Enqueue: " + priorityQueue);
-        Console.WriteLine("Dequeued: " + priorityQueue.Dequeue()); // Expected: Item1 (Pri:3)
-        Console.WriteLine("Dequeued: " + priorityQueue.Dequeue()); // Expected: Item3 (Pri:2)
-        Console.WriteLine("Dequeued: " + priorityQueue.Dequeue()); // Expected: Item2 (Pri:1)
+        Console.WriteLine("Dequeued: " + priorityQueue.Dequeue()); // Expected: Alice (Pri:3)
+        Console.WriteLine("Dequeued: " + priorityQueue.Dequeue()); // Expected: Bob (Pri:2)
+        Console.WriteLine("Dequeued: " + priorityQueue.Dequeue()); // Expected: Charlie (Pri:1)
 
         Console.WriteLine("---------");
 
