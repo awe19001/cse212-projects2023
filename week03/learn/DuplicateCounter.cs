@@ -23,8 +23,28 @@
     }
 
     private static int CountDuplicates(int[] data)
-    {
-        // Add code here.
-        return 0;
+ {
+        
+        HashSet<int> uniqueElements = new HashSet<int>(); //Use a HashSet to keep track of unique elements.
+        
+                                                         
+        HashSet<int> duplicates = new HashSet<int>();     //Use a HashSet to keep track of duplicate elements.
+        
+        int count = 0;
+
+        foreach (int item in data)                       //The 'foreach' loop iterates through the array, and for each element, it checks if it's already in 'uniqueElements'.
+        {                                                
+                                                    
+            if (!uniqueElements.Add(item))               // If the element is already in the unique set, it's a duplicate.
+            {
+                                                    
+                if (duplicates.Add(item))                // If the element is not already in the duplicate set, count it as a duplicate.
+                {
+                    count++;                            // the 'count' variable is used to keep track of the total number of duplicates.
+                }
+            }
+        }
+
+        return count;
     }
 }
