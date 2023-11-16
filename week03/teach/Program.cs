@@ -1,4 +1,4 @@
-﻿Console.WriteLine("\n======================\nUnique Letters\n======================");
+﻿﻿﻿Console.WriteLine("\n======================\nUnique Letters\n======================");
 UniqueLetters.Run();
 
 Console.WriteLine("\n======================\nDisplay Sums\n======================");

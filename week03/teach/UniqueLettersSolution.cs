@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿﻿/*
  * CSE212 
  * (c) BYU-Idaho
  * 05-Teach - Problem 1

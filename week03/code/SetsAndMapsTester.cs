@@ -111,6 +111,33 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+
+  // Create a HashSet to store seen words
+        HashSet<string> seenWords = new HashSet<string>();
+
+        foreach (var word in words)
+        {
+            // Ensure the word is two characters long
+            if (word.Length == 2)
+            {
+                // Create the reverse of the word
+                string reverseWord = $"{word[1]}{word[0]}";
+
+                // Check if the reverse word is in the HashSet
+                if (seenWords.Contains(reverseWord))
+                {
+                    // Display the symmetric pair
+                    Console.WriteLine($"{word} & {reverseWord}");
+                }
+                else
+                {
+                    // Add the original word to the HashSet
+                    seenWords.Add(word);
+                }
+            }
+        }
+
+
     }
 
     /// <summary>
@@ -132,6 +159,18 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+
+             // Check if there are enough columns and if the degree column is not empty
+            if (fields.Length >= 4 && !string.IsNullOrEmpty(fields[3].Trim())) {
+                var degree = fields[3].Trim(); // Assuming the degree is in the 4th column
+
+                // Update the degree count in the dictionary
+                if (degrees.ContainsKey(degree)) {
+                    degrees[degree]++;
+                } else {
+                    degrees[degree] = 1;
+                }
+            }
         }
 
         return degrees;
@@ -158,7 +197,55 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+
+        // remove spaces and convert to lowercase
+        word1 = word1.Replace(" ", " ").ToLower();
+        word1 = word1.Replace(" ", " ").ToLower();
+            // Check if lengths are equal
+                if (word1.Length != word2.Length) {
+                    return false;
+                }
+
+                // Create dictionaries to store character frequencies
+                Dictionary<char, int> frequency1 = new Dictionary<char, int>();
+                Dictionary<char, int> frequency2 = new Dictionary<char, int>();
+
+                // Update frequencies for word1
+                foreach (char c in word1) {
+                    if (frequency1.ContainsKey(c)) {
+                        frequency1[c]++;
+                    } else {
+                        frequency1[c] = 1;
+                    }
+                }
+
+                // Update frequencies for word2
+                foreach (char c in word2) {
+                    if (frequency2.ContainsKey(c)) {
+                        frequency2[c]++;
+                    } else {
+                        frequency2[c] = 1;
+                    }
+                }
+
+                // Compare the two dictionaries
+                foreach (var kvp in frequency1) {
+                    char key = kvp.Key;
+                    int value = kvp.Value;
+
+                    // Check if key exists in frequency2
+                    if (!frequency2.ContainsKey(key)) {
+                        return false;
+                    }
+
+                    // Check if frequencies are equal
+                    if (frequency2[key] != value) {
+                        return false;
+                    }
+                }
+
+                // If all checks pass, words are anagrams
+                return true;
     }
 
     /// <summary>
