@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * CSE 212 Lesson 6C 
  * 
  * This code will analyze the NBA basketball data and create a table showing
@@ -27,10 +27,28 @@ public class Basketball
             var fields = reader.ReadFields()!;
             var playerId = fields[0];
             var points = int.Parse(fields[8]);
+         // Accumulate points for each player
+            if (players.ContainsKey(playerId))
+            {
+                players[playerId] += points;
+            }
+            else
+            {
+                players[playerId] = points;
+            }
         }
 
-        Console.WriteLine($"Players: {{{string.Join(", ", players)}}}");
+        // Convert dictionary to list of KeyValuePairs
+        var playerList = players.ToList();
 
-        var topPlayers = new string[10];
+        // Sort the list based on total points in descending order
+        playerList.Sort((x, y) => y.Value.CompareTo(x.Value));
+
+        // Display the top 10 players
+        Console.WriteLine("Top 10 Players:");
+        for (int i = 0; i < Math.Min(10, playerList.Count); i++)
+        {
+            Console.WriteLine($"{i + 1}. PlayerID: {playerList[i].Key}, Total Points: {playerList[i].Value}");
+        }
     }
 }
