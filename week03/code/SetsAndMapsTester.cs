@@ -1,8 +1,10 @@
 using System.Text.Json;
-
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 public static class SetsAndMapsTester {
-    public static void Run() {
+    public static async Task RunAsync() {
         // Problem 1: Find Pairs with Sets
         Console.WriteLine("\n=========== Finding Pairs TESTS ===========");
         DisplayPairs(new[] { "am", "at", "ma", "if", "fi" });
@@ -79,7 +81,7 @@ public static class SetsAndMapsTester {
         // Problem 5: Earthquake
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== Earthquake TESTS ===========");
-        _ = EarthquakeDailySummary();
+        await EarthquakeDailySummary();
 
         // Sample output from the function.  Number of earthquakes, places, and magnitudes will vary.
         // 1km NE of Pahala, Hawaii - Mag 2.36
@@ -308,44 +310,33 @@ public static class SetsAndMapsTester {
     /// https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     /// 
     /// </summary>
-  private static async Task EarthquakeDailySummary()
-{
-    {
-        const string uri = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
-
-        try
+ private static async Task EarthquakeDailySummary()
         {
-            using var client = new HttpClient();
-            using var response = await client.GetAsync(uri);
+            const string uri = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                Console.WriteLine($"Failed to retrieve earthquake data. Status code: {response.StatusCode}");
-                return;
-            }
+                using var client = new HttpClient();
+                using var response = await client.GetAsync(uri);
 
-            using var responseStream = await response.Content.ReadAsStreamAsync();
-            using var jsonReader = new StreamReader(responseStream);
-            var json = await jsonReader.ReadToEndAsync();
-
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
-
-            if (featureCollection?.Features != null)
-            {
-                foreach (var feature in featureCollection.Features)
+                if (!response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"Place: {feature.Properties.Place} - Mag: {feature.Properties.Mag}");
+                    Console.WriteLine($"Failed to retrieve earthquake data. Status code: {response.StatusCode}");
+                    return;
                 }
+
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                using var jsonReader = new StreamReader(responseStream);
+                var json = await jsonReader.ReadToEndAsync();
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
+
+                featureCollection?.DisplayEarthquakeSummary();
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("No earthquake data found.");
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
-    }
-}}
+}

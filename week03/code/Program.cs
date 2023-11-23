@@ -8,5 +8,8 @@
  * GitHub repository, unshared Google Drive folder) is acceptable.
  */
 
+using System;
+using System.Threading.Tasks;
+
 Console.WriteLine("\n======================\nMaps\n======================");
-SetsAndMapsTester.Run();
+SetsAndMapsTester.RunAsync().Wait();
