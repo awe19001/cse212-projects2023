@@ -55,19 +55,20 @@ public class Maze {
     /// place to move given the size of the maze, the content of the maze,
     /// and the current path already traversed.
     /// </summary>
-    public bool IsValidMove(List<ValueTuple<int, int>> currPath, int x, int y) {
-        // Can't go outside of the maze boundary (assume maze is a square)
-        if (x > Width - 1 || x < 0)
-            return false;
-        if (y > Height - 1 || y < 0)
-            return false;
-        // Can't go through a wall
-        if (Data[y * Height + x] == 0)
-            return false;
-        // Can't go if we have already been there (don't go in circles)
-        if (currPath.Contains((x, y)))
-            return false;
-        // Otherwise, we are good
-        return true;
-    }
+    public bool IsValidMove(List<ValueTuple<int, int>> currPath, int x, int y)
+{
+    // Can't go outside of the maze boundary (assume maze is a square)
+    if (x >= Width || x < 0)
+        return false;
+    if (y >= Height || y < 0)
+        return false;
+    // Can't go through a wall
+    if (Data[y * Width + x] == 0)
+        return false;
+    // Can't go if we have already been there (don't go in circles)
+    if (currPath.Contains((x, y)))
+        return false;
+    // Otherwise, we are good
+    return true;
+}
 }

@@ -70,31 +70,30 @@ public static class RecursionTester {
          Console.WriteLine(CountWaysToClimb(100));  // 180396380815100901214157639
 
         // Sample Test Cases (may not be comprehensive) 
-            Console.WriteLine("\n=========== PROBLEM 4 TESTS ===========");
-            WildcardBinary("110*0*");
-            // 110000
-            // 110001
-            // 110100
-            // 110101
-            WildcardBinary("***");
-            // 000   
-            // 001   
-            // 010
-            // 011
-            // 100
-            // 101
-            // 110
-            // 111
+        Console.WriteLine("\n=========== PROBLEM 4 TESTS ===========");
+        WildcardBinary("110*0*");
+        // 110000
+        // 110001
+        // 110100
+        // 110101
+        WildcardBinary("***");
+        // 000   
+        // 001   
+        // 010
+        // 011
+        // 100
+        // 101
+        // 110
+        // 111
 
-        // Sample Test Cases (may not be comprehensive) 
+         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== PROBLEM 5 TESTS ===========");
-        Maze smallMaze = new(3, 3, new[] { 1, 1, 1, 1, 0, 1, 1, 1, 2 });
+        Maze smallMaze = new Maze(3, 3, new[] { 1, 1, 1, 1, 0, 1, 1, 1, 2 });
         SolveMaze(smallMaze);
         // Two Solutions (order in each solution should match):
         // <List>{(0, 0), (0, 1), (0, 2), (1, 2), (2, 2)}
         // <List>{(0, 0), (1, 0), (2, 0), (2, 1), (2, 2)}
 
-        //Maze bigMaze = new(20, 20,
         Maze bigMaze = new(20, 20,
             new[] {
                 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -135,6 +134,7 @@ public static class RecursionTester {
         // (19, 11), (19, 12), (18, 12), (17, 12), (16, 12), (16, 13), (16, 14), (16, 15), 
         // (17, 15), (18, 15), (18, 16), (18, 17), (18, 18), (18, 19), (19, 19)}
     }
+
 
     /// <summary>
     /// #############
@@ -281,7 +281,7 @@ public static class RecursionTester {
     /// Using recursion, display all possible binary strings for a given pattern.  You might find 
     /// some of the string functions like IndexOf and [..X] / [X..] to be useful in solving this problem.
     /// </summary>
-   public static void WildcardBinary(string pattern)
+public static void WildcardBinary(string pattern)
 {
     WildcardBinaryHelper(pattern, "");
 }
@@ -314,51 +314,56 @@ private static void WildcardBinaryHelper(string pattern, string current)
 
 
     /// <summary>
-    /// Use recursion to Print all paths that start at (0,0) and end at the
-    /// 'end' square.
-    /// </summary>
-    public static void SolveMaze(Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null) {
-    // If this is the first time running the function, then we need
-    // to initialize the currPath list.
+/// Use recursion to Print all paths that start at (0,0) and end at the
+/// 'end' square.
+/// </summary>
+public static void SolveMaze(Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null)
+{
     currPath ??= new List<ValueTuple<int, int>>();
-
-    // Add the current position to the path
     currPath.Add((x, y));
 
-    // Check if we have reached the end of the maze
     if (maze.IsEnd(x, y))
     {
-        // Print the current path
         PrintPath(currPath);
-        // Backtrack to explore other paths
-        currPath.RemoveAt(currPath.Count - 1);
-        currPath.RemoveAt(currPath.Count - 1); // Remove the previous position as well
         return;
     }
 
-    // Explore all possible moves (up, down, left, right)
-    ExploreMove(maze, currPath, x + 1, y);
-    ExploreMove(maze, currPath, x - 1, y);
-    ExploreMove(maze, currPath, x, y + 1);
-    ExploreMove(maze, currPath, x, y - 1);
+    if (!maze.IsValidMove(currPath, x, y))
+    {
+        // If the current position is not a valid move, stop exploring
+        return;
+    }
 
-    // Backtrack after exploring all possible moves
-    currPath.RemoveAt(currPath.Count - 1);
+    maze.Data[y * maze.Height + x] = 0; // Mark the current position as visited
+
+    SolveMaze(maze, x + 1, y, currPath);
+    SolveMaze(maze, x - 1, y, currPath);
+    SolveMaze(maze, x, y + 1, currPath);
+    SolveMaze(maze, x, y - 1, currPath);
+
+    maze.Data[y * maze.Height + x] = 1; // Mark the current position as open after exploration
 }
 
+
 // Helper function to explore a move and continue the recursion
-private static void ExploreMove(Maze maze, List<ValueTuple<int, int>> currPath, int newX, int newY) {
-    if (maze.IsValidMove(currPath, newX, newY)) {
+private static void ExploreMove(Maze maze, List<ValueTuple<int, int>> currPath, int newX, int newY)
+{
+    // Check if the move is valid
+    if (maze.IsValidMove(currPath, newX, newY))
+    {
+        // Recursively call with the updated position
         SolveMaze(maze, newX, newY, currPath);
     }
 }
 
 // Helper function to print the path
-private static void PrintPath(List<ValueTuple<int, int>> path) {
+private static void PrintPath(List<ValueTuple<int, int>> path)
+{
     Console.WriteLine("Path:");
-    foreach (var point in path) {
+    foreach (var point in path)
+    {
         Console.Write($"({point.Item1}, {point.Item2}) ");
     }
-    Console.WriteLine();
+    Console.WriteLine("\nEnd of Path\n");
 }
 }
