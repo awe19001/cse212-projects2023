@@ -67,24 +67,24 @@ public static class RecursionTester {
         Console.WriteLine(CountWaysToClimb(20)); // 121415
         // Uncomment out the test below after implementing memoization.  It won't work without it.
         // TODO Problem 3
-        // Console.WriteLine(CountWaysToClimb(100));  // 180396380815100901214157639
+         Console.WriteLine(CountWaysToClimb(100));  // 180396380815100901214157639
 
         // Sample Test Cases (may not be comprehensive) 
-        Console.WriteLine("\n=========== PROBLEM 4 TESTS ===========");
-        WildcardBinary("110*0*");
-        // 110000
-        // 110001
-        // 110100
-        // 110101
-        WildcardBinary("***");
-        // 000   
-        // 001   
-        // 010
-        // 011
-        // 100
-        // 101
-        // 110
-        // 111
+            Console.WriteLine("\n=========== PROBLEM 4 TESTS ===========");
+            WildcardBinary("110*0*");
+            // 110000
+            // 110001
+            // 110100
+            // 110101
+            WildcardBinary("***");
+            // 000   
+            // 001   
+            // 010
+            // 011
+            // 100
+            // 101
+            // 110
+            // 111
 
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== PROBLEM 5 TESTS ===========");
@@ -145,9 +145,16 @@ public static class RecursionTester {
     /// to identify a base case (terminating case).  If the value of
     /// n &lt;= 0, just return 0.   A loop should not be used.
     /// </summary>
-    public static int SumSquaresRecursive(int n) {
-        // TODO Start Problem 1
-        return 0;
+    public static int SumSquaresRecursive(int n)  {
+       
+        // Base Case: If n is less than or equal to 0, return 0
+        if (n <= 0)
+        {
+            return 0;
+        }
+        
+        // Recursive Case: Sum of squares is the square of n plus the sum of squares for (n-1)
+        return n * n + SumSquaresRecursive(n - 1);
     }
 
     /// <summary>
@@ -169,9 +176,25 @@ public static class RecursionTester {
     /// You can assume that the size specified is always valid (between 1 
     /// and the length of the letters list).
     /// </summary>
-    public static void PermutationsChoose(string letters, int size, string word = "") {
-        // TODO Start Problem 2
+    public static void PermutationsChoose(string letters, int size, string word = "")    {
+        // Base Case: If the current word has reached the desired size, print it
+        if (word.Length == size)
+        {
+            Console.WriteLine(word);
+            return;
+        }
+
+        // Recursive Case: Generate permutations by choosing each letter at the current position
+        for (int i = 0; i < letters.Length; i++)
+        {
+            // Exclude the current letter from the remaining letters
+            string remainingLetters = letters.Substring(0, i) + letters.Substring(i + 1);
+
+            // Recursively call with the updated word and remaining letters
+            PermutationsChoose(remainingLetters, size, word + letters[i]);
+        }
     }
+    
 
     /// <summary>
     /// #############
@@ -229,10 +252,20 @@ public static class RecursionTester {
         if (s == 3)
             return 4;
 
+        // Check if the result for the current 's' is already memoized
+        if (remember != null && remember.ContainsKey(s))
+            return remember[s];
+
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
+        decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+
+        // Memoize the result for the current 's'
+        if (remember != null)
+            remember[s] = ways;
+
         return ways;
     }
+
 
     /// <summary>
     /// #############
@@ -247,9 +280,37 @@ public static class RecursionTester {
     /// Using recursion, display all possible binary strings for a given pattern.  You might find 
     /// some of the string functions like IndexOf and [..X] / [X..] to be useful in solving this problem.
     /// </summary>
-    public static void WildcardBinary(string pattern) {
-        // TODO Start Problem 4
+    public static void WildcardBinary(string pattern)
+{
+    WildcardBinaryHelper(pattern, "");
+}
+
+// Helper function for recursion
+private static void WildcardBinaryHelper(string pattern, string current)
+{
+    // Base Case: If the pattern is empty, print the current string
+    if (pattern.Length == 0)
+    {
+        Console.WriteLine(current);
+        return;
     }
+
+    // Recursive Case: Check the first character of the pattern
+    char firstChar = pattern[0];
+
+    // If it's '*', we have two choices: replace it with '0' and '1'
+    if (firstChar == '*')
+    {
+        WildcardBinaryHelper(pattern.Substring(1), current + "0");
+        WildcardBinaryHelper(pattern.Substring(1), current + "1");
+    }
+    else
+    {
+        // If it's not '*', just append it to the current string
+        WildcardBinaryHelper(pattern.Substring(1), current + firstChar);
+    }
+}
+
 
     /// <summary>
     /// Use recursion to Print all paths that start at (0,0) and end at the
