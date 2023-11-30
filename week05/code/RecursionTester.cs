@@ -243,6 +243,7 @@ public static class RecursionTester {
     /// until the memoization is implemented.
     /// </summary>
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null) {
+        remember ??= new Dictionary<int, decimal>();
         // Base Cases
         if (s == 0)
             return 0;
@@ -254,14 +255,14 @@ public static class RecursionTester {
             return 4;
 
         // Check if the result for the current 's' is already memoized
-        if (remember != null && remember.ContainsKey(s))
+        if (remember.ContainsKey(s))
             return remember[s];
 
         // Solve using recursion
         decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
 
         // Memoize the result for the current 's'
-        if (remember != null)
+        
             remember[s] = ways;
 
         return ways;
@@ -283,7 +284,8 @@ public static class RecursionTester {
     /// </summary>
 public static void WildcardBinary(string pattern)
 {
-    WildcardBinaryHelper(pattern, "");
+     WildcardBinaryHelper(pattern, "");
+    //Console.WriteLine(pattern);
 }
 
 // Helper function for recursion
